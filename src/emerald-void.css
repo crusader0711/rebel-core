@@ -35,13 +35,13 @@
     --dashboard-title-action-color: rgba(0,255,136,0.10);
     --dashboard-icon-color: #0a110d;
 
-    --border-color: #1c3a29;
+    --border-color: #214f37;
     --disabled-border-color: #122418;
-    --input-border-color: #2f6a47;
+    --input-border-color: #3a7d55;
     --disabled-input-border-color: #122418;
-    --textarea-border-color: #1c3a29;
+    --textarea-border-color: #214f37;
     --inverse-border-color: rgba(0,255,136,0.25);
-    --table-border-color: #1c3a29;
+    --table-border-color: #214f37;
     --table-background-color: #0a110d;
     --table-header-background-color: #07100b;
     --hover-table-row-background-color: rgba(0,255,136,0.06);
@@ -50,7 +50,7 @@
     --footer-background-color: #07100b;
 
     --small-shadow: 0 0 3px #000000;
-    --hr-color: #1c3a29;
+    --hr-color: #214f37;
 
     --checkbox-color: #143021;
     --checkbox-hover-color: #2f6a47;
@@ -370,9 +370,14 @@ pre, code, .logLine, #logBody { font-family: var(--ev-mono); }
 
 
 /* ───────────────────────── 3. UNRAID API WEB COMPONENTS (.unapi) ──────────── */
-/* ThemeUI derives these shadcn HSL + Nuxt-UI tokens from the SELECTED theme file
-   only; when this CSS runs as the override we must set them explicitly so
-   Settings > Unraid API / Connect / OIDC panels follow the palette too.      */
+/* Unraid 7.2's Update OS / Connect / API pages are @unraid/ui components built
+   on Tailwind v4 with `@theme static`, so every utility (bg-gray-200,
+   text-black, bg-orange, from-unraid-red…) resolves through a --color-* token.
+   ThemeUI only remaps the shadcn/Nuxt-UI tokens from the SELECTED theme file,
+   and recolours text-gray-* without darkening the light backgrounds — which is
+   what produced mint-on-light-grey pills. We remap the palette itself.       */
+
+/* 3.1 shadcn HSL + Nuxt UI semantic tokens (what ThemeUI would have generated) */
 :root, .unapi, .unapi.dark, .dark, .dark[data-theme] {
     --background: 160 23.1% 2.5% !important;
     --foreground: 141 54.3% 86.3% !important;
@@ -380,45 +385,355 @@ pre, code, .logLine, #logBody { font-family: var(--ev-mono); }
     --card-foreground: 141 54.3% 86.3% !important;
     --popover: 146 25.9% 5.3% !important;
     --popover-foreground: 141 54.3% 86.3% !important;
-    --muted: 146 25.9% 5.3% !important;
+    --muted: 148 41.2% 13.3% !important;
     --muted-foreground: 141 22.0% 53.7% !important;
-    --secondary: 146 25.9% 5.3% !important;
+    --secondary: 148 41.2% 13.3% !important;
     --secondary-foreground: 141 54.3% 86.3% !important;
     --accent: 148 41.2% 13.3% !important;
     --accent-foreground: 141 54.3% 86.3% !important;
-    --border: 146 34.9% 16.9% !important;
-    --input: 144 38.6% 30.0% !important;
+    --border: 149 41.1% 21.9% !important;
+    --input: 144 36.5% 36.1% !important;
     --primary: 152 100% 50% !important;            /* #00ff88 */
     --primary-foreground: 160 23.1% 2.5% !important;
     --destructive: 350 100% 58.2% !important;      /* #ff2a4d */
-    --destructive-foreground: 160 23.1% 2.5% !important;
+    --destructive-foreground: 0 0% 100% !important;
     --ring: 152 100% 50% !important;
 
     --ui-bg: #050807 !important;
     --ui-bg-muted: #0a110d !important;
-    --ui-bg-elevated: #0a110d !important;
-    --ui-bg-accented: #143021 !important;
+    --ui-bg-elevated: #0e1f15 !important;
+    --ui-bg-accented: #163a28 !important;
+    --ui-bg-inverted: #c9efd6 !important;
     --ui-text: #c9efd6 !important;
     --ui-text-toned: #c9efd6 !important;
-    --ui-text-highlighted: #c9efd6 !important;
+    --ui-text-highlighted: #e3f8ea !important;
     --ui-text-muted: #6fa381 !important;
     --ui-text-dimmed: #6fa381 !important;
     --ui-text-inverted: #050807 !important;
-    --ui-border: #1c3a29 !important;
-    --ui-border-muted: #1c3a29 !important;
-    --ui-border-accented: #2f6a47 !important;
+    --ui-border: #214f37 !important;
+    --ui-border-muted: #214f37 !important;
+    --ui-border-accented: #3a7d55 !important;
+    --ui-border-inverted: #c9efd6 !important;
     --ui-primary: #00ff88 !important;
+    --ui-primary-hover: #00d873 !important;
+    --ui-primary-active: #00b35f !important;
+    --ui-secondary: #6fa381 !important;
     --ui-error: #ff2a4d !important;
     --ui-success: #00ff88 !important;
     --ui-warning: #b4ff3c !important;
+    --ui-info: #19e6b5 !important;
+
+    /* Nuxt UI colour scales (inverted: 50 darkest → 950 lightest) */
+    --ui-color-neutral-50: #07100b !important;
+    --ui-color-neutral-100: #0e1f15 !important;
+    --ui-color-neutral-200: #163a28 !important;
+    --ui-color-neutral-300: #1e4a34 !important;
+    --ui-color-neutral-400: #2f6a47 !important;
+    --ui-color-neutral-500: #4f8f66 !important;
+    --ui-color-neutral-600: #6fa381 !important;
+    --ui-color-neutral-700: #9ccbae !important;
+    --ui-color-neutral-800: #c9efd6 !important;
+    --ui-color-neutral-900: #e3f8ea !important;
+    --ui-color-neutral-950: #f2fff6 !important;
+    --ui-color-primary-50: #07251a !important;
+    --ui-color-primary-100: #083321 !important;
+    --ui-color-primary-200: #0b3b25 !important;
+    --ui-color-primary-300: #0f4a2e !important;
+    --ui-color-primary-400: #00a85a !important;
+    --ui-color-primary-500: #00c86b !important;
+    --ui-color-primary-600: #00e07a !important;
+    --ui-color-primary-700: #00ff88 !important;
+    --ui-color-primary-800: #00ff88 !important;
+    --ui-color-primary-900: #9dffd0 !important;
+    --ui-color-primary-950: #d8ffea !important;
+
+    /* Unraid brand tokens (unraid-theme.css) */
+    --color-orange: #0d6b42 !important;          /* filled chips/pills: deep emerald, white text (5.5:1) */
+    --color-orange-dark: #0a5434 !important;
+    --color-yellow-accent: #b4ff3c !important;
+    --color-unraid-red: #e0163b !important;      /* filled red chip, white text (4.9:1) */
+    --color-unraid-green: #00ff88 !important;
+    --color-grey: #1e4a34 !important;
+    --color-grey-mid: #2f6a47 !important;
+    --color-grey-light: #163a28 !important;
+    --color-grey-lighter: #0e1f15 !important;
+    --color-grey-lightest: #0a110d !important;
+    --color-alpha: #00ff88 !important;
+    --color-beta: #0a110d !important;
+    --color-gamma: #6fa381 !important;
+    --color-gamma-opaque: rgba(111,163,129,0.5) !important;
+    --color-customgradient-start: rgba(5,8,7,0) !important;
+    --color-customgradient-end: rgba(5,8,7,0.85) !important;
+    --color-header-gradient-start: rgba(3,5,4,0) !important;
+    --color-header-gradient-end: rgba(3,5,4,0.85) !important;
+
+    /* Tailwind palette scales the badges/buttons actually use */
+    --color-gray-50: #07100b !important;
+    --color-gray-100: #0e1f15 !important;
+    --color-gray-200: #163a28 !important;
+    --color-gray-300: #1e4a34 !important;
+    --color-gray-400: #2f6a47 !important;
+    --color-gray-500: #4f8f66 !important;
+    --color-gray-600: #6fa381 !important;
+    --color-gray-700: #9ccbae !important;
+    --color-gray-800: #c9efd6 !important;
+    --color-gray-900: #e3f8ea !important;
+    --color-gray-950: #f2fff6 !important;
+    --color-neutral-50: #07100b !important;
+    --color-neutral-100: #0e1f15 !important;
+    --color-neutral-200: #163a28 !important;
+    --color-neutral-300: #1e4a34 !important;
+    --color-neutral-400: #2f6a47 !important;
+    --color-neutral-500: #4f8f66 !important;
+    --color-neutral-600: #6fa381 !important;
+    --color-neutral-700: #9ccbae !important;
+    --color-neutral-800: #c9efd6 !important;
+    --color-neutral-900: #e3f8ea !important;
+    --color-neutral-950: #f2fff6 !important;
+    --color-zinc-50: #07100b !important;
+    --color-zinc-100: #0e1f15 !important;
+    --color-zinc-200: #163a28 !important;
+    --color-zinc-300: #1e4a34 !important;
+    --color-zinc-400: #2f6a47 !important;
+    --color-zinc-500: #4f8f66 !important;
+    --color-zinc-600: #6fa381 !important;
+    --color-zinc-700: #9ccbae !important;
+    --color-zinc-800: #c9efd6 !important;
+    --color-zinc-900: #e3f8ea !important;
+    --color-zinc-950: #f2fff6 !important;
+    --color-slate-50: #07100b !important;
+    --color-slate-100: #0e1f15 !important;
+    --color-slate-200: #163a28 !important;
+    --color-slate-300: #1e4a34 !important;
+    --color-slate-400: #2f6a47 !important;
+    --color-slate-500: #4f8f66 !important;
+    --color-slate-600: #6fa381 !important;
+    --color-slate-700: #9ccbae !important;
+    --color-slate-800: #c9efd6 !important;
+    --color-slate-900: #e3f8ea !important;
+    --color-slate-950: #f2fff6 !important;
+    --color-yellow-50: #1b230a !important;
+    --color-yellow-100: #2a3a0c !important;
+    --color-yellow-200: #36490f !important;
+    --color-yellow-300: #4a6414 !important;
+    --color-yellow-400: #6f9a1d !important;
+    --color-yellow-500: #8ccc1f !important;
+    --color-yellow-600: #b4ff3c !important;
+    --color-yellow-700: #c8ff66 !important;
+    --color-yellow-800: #d7ff7a !important;
+    --color-yellow-900: #e6ffa3 !important;
+    --color-yellow-950: #f3ffd1 !important;
+    --color-amber-50: #1b230a !important;
+    --color-amber-100: #2a3a0c !important;
+    --color-amber-200: #36490f !important;
+    --color-amber-300: #4a6414 !important;
+    --color-amber-400: #6f9a1d !important;
+    --color-amber-500: #8ccc1f !important;
+    --color-amber-600: #b4ff3c !important;
+    --color-amber-700: #c8ff66 !important;
+    --color-amber-800: #d7ff7a !important;
+    --color-amber-900: #e6ffa3 !important;
+    --color-amber-950: #f3ffd1 !important;
+    --color-lime-50: #1b230a !important;
+    --color-lime-100: #2a3a0c !important;
+    --color-lime-200: #36490f !important;
+    --color-lime-300: #4a6414 !important;
+    --color-lime-400: #6f9a1d !important;
+    --color-lime-500: #8ccc1f !important;
+    --color-lime-600: #b4ff3c !important;
+    --color-lime-700: #c8ff66 !important;
+    --color-lime-800: #d7ff7a !important;
+    --color-lime-900: #e6ffa3 !important;
+    --color-lime-950: #f3ffd1 !important;
+    --color-green-50: #07251a !important;
+    --color-green-100: #083321 !important;
+    --color-green-200: #0b3b25 !important;
+    --color-green-300: #0f4a2e !important;
+    --color-green-400: #00a85a !important;
+    --color-green-500: #00c86b !important;
+    --color-green-600: #00e07a !important;
+    --color-green-700: #00ff88 !important;
+    --color-green-800: #00ff88 !important;
+    --color-green-900: #9dffd0 !important;
+    --color-green-950: #d8ffea !important;
+    --color-emerald-50: #07251a !important;
+    --color-emerald-100: #083321 !important;
+    --color-emerald-200: #0b3b25 !important;
+    --color-emerald-300: #0f4a2e !important;
+    --color-emerald-400: #00a85a !important;
+    --color-emerald-500: #00c86b !important;
+    --color-emerald-600: #00e07a !important;
+    --color-emerald-700: #00ff88 !important;
+    --color-emerald-800: #00ff88 !important;
+    --color-emerald-900: #9dffd0 !important;
+    --color-emerald-950: #d8ffea !important;
+    --color-primary-50: #07251a !important;
+    --color-primary-100: #083321 !important;
+    --color-primary-200: #0b3b25 !important;
+    --color-primary-300: #0f4a2e !important;
+    --color-primary-400: #00a85a !important;
+    --color-primary-500: #00c86b !important;
+    --color-primary-600: #00e07a !important;
+    --color-primary-700: #00ff88 !important;
+    --color-primary-800: #00ff88 !important;
+    --color-primary-900: #9dffd0 !important;
+    --color-primary-950: #d8ffea !important;
+    --color-blue-50: #071f24 !important;
+    --color-blue-100: #0a2a33 !important;
+    --color-blue-200: #0d3842 !important;
+    --color-blue-300: #124a56 !important;
+    --color-blue-400: #10a68a !important;
+    --color-blue-500: #14c9a3 !important;
+    --color-blue-600: #19e6b5 !important;
+    --color-blue-700: #19e6b5 !important;
+    --color-blue-800: #19e6b5 !important;
+    --color-blue-900: #a6f5e1 !important;
+    --color-blue-950: #d9fbf2 !important;
+    --color-sky-50: #071f24 !important;
+    --color-sky-100: #0a2a33 !important;
+    --color-sky-200: #0d3842 !important;
+    --color-sky-300: #124a56 !important;
+    --color-sky-400: #10a68a !important;
+    --color-sky-500: #14c9a3 !important;
+    --color-sky-600: #19e6b5 !important;
+    --color-sky-700: #19e6b5 !important;
+    --color-sky-800: #19e6b5 !important;
+    --color-sky-900: #a6f5e1 !important;
+    --color-sky-950: #d9fbf2 !important;
+    --color-cyan-50: #071f24 !important;
+    --color-cyan-100: #0a2a33 !important;
+    --color-cyan-200: #0d3842 !important;
+    --color-cyan-300: #124a56 !important;
+    --color-cyan-400: #10a68a !important;
+    --color-cyan-500: #14c9a3 !important;
+    --color-cyan-600: #19e6b5 !important;
+    --color-cyan-700: #19e6b5 !important;
+    --color-cyan-800: #19e6b5 !important;
+    --color-cyan-900: #a6f5e1 !important;
+    --color-cyan-950: #d9fbf2 !important;
+    --color-teal-50: #071f24 !important;
+    --color-teal-100: #0a2a33 !important;
+    --color-teal-200: #0d3842 !important;
+    --color-teal-300: #124a56 !important;
+    --color-teal-400: #10a68a !important;
+    --color-teal-500: #14c9a3 !important;
+    --color-teal-600: #19e6b5 !important;
+    --color-teal-700: #19e6b5 !important;
+    --color-teal-800: #19e6b5 !important;
+    --color-teal-900: #a6f5e1 !important;
+    --color-teal-950: #d9fbf2 !important;
+    --color-indigo-50: #071f24 !important;
+    --color-indigo-100: #0a2a33 !important;
+    --color-indigo-200: #0d3842 !important;
+    --color-indigo-300: #124a56 !important;
+    --color-indigo-400: #10a68a !important;
+    --color-indigo-500: #14c9a3 !important;
+    --color-indigo-600: #19e6b5 !important;
+    --color-indigo-700: #19e6b5 !important;
+    --color-indigo-800: #19e6b5 !important;
+    --color-indigo-900: #a6f5e1 !important;
+    --color-indigo-950: #d9fbf2 !important;
+    --color-purple-50: #071f24 !important;
+    --color-purple-100: #0a2a33 !important;
+    --color-purple-200: #0d3842 !important;
+    --color-purple-300: #124a56 !important;
+    --color-purple-400: #10a68a !important;
+    --color-purple-500: #14c9a3 !important;
+    --color-purple-600: #19e6b5 !important;
+    --color-purple-700: #19e6b5 !important;
+    --color-purple-800: #19e6b5 !important;
+    --color-purple-900: #a6f5e1 !important;
+    --color-purple-950: #d9fbf2 !important;
+    --color-pink-50: #2a0810 !important;
+    --color-pink-100: #3b0a16 !important;
+    --color-pink-200: #4d0d1c !important;
+    --color-pink-300: #6b1026 !important;
+    --color-pink-400: #b3183a !important;
+    --color-pink-500: #ff2a4d !important;
+    --color-pink-600: #e0163b !important;
+    --color-pink-700: #bd1232 !important;
+    --color-pink-800: #ff5c78 !important;
+    --color-pink-900: #ff8ea1 !important;
+    --color-pink-950: #ffd1da !important;
+    --color-red-50: #2a0810 !important;
+    --color-red-100: #3b0a16 !important;
+    --color-red-200: #4d0d1c !important;
+    --color-red-300: #6b1026 !important;
+    --color-red-400: #b3183a !important;
+    --color-red-500: #ff2a4d !important;
+    --color-red-600: #e0163b !important;
+    --color-red-700: #bd1232 !important;
+    --color-red-800: #ff5c78 !important;
+    --color-red-900: #ff8ea1 !important;
+    --color-red-950: #ffd1da !important;
+    --color-unraid-red-50: #2a0810 !important;
+    --color-unraid-red-100: #3b0a16 !important;
+    --color-unraid-red-200: #4d0d1c !important;
+    --color-unraid-red-300: #6b1026 !important;
+    --color-unraid-red-400: #b3183a !important;
+    --color-unraid-red-500: #ff2a4d !important;
+    --color-unraid-red-600: #e0163b !important;
+    --color-unraid-red-700: #bd1232 !important;
+    --color-unraid-red-800: #ff5c78 !important;
+    --color-unraid-red-900: #ff8ea1 !important;
+    --color-unraid-red-950: #ffd1da !important;
+    --color-unraid-green-50: #07251a !important;
+    --color-unraid-green-100: #083321 !important;
+    --color-unraid-green-200: #0b3b25 !important;
+    --color-unraid-green-300: #0f4a2e !important;
+    --color-unraid-green-400: #00a85a !important;
+    --color-unraid-green-500: #00c86b !important;
+    --color-unraid-green-600: #00e07a !important;
+    --color-unraid-green-700: #00ff88 !important;
+    --color-unraid-green-800: #00ff88 !important;
+    --color-unraid-green-900: #9dffd0 !important;
+    --color-unraid-green-950: #d8ffea !important;
 }
-.unapi .text-gray-400, .unapi .text-gray-500, .unapi .text-gray-600 { color: var(--alt-text-color) !important; }
-.unapi .text-gray-700, .unapi .text-gray-800, .unapi .text-gray-900, .unapi .text-black { color: var(--text-color) !important; }
-.unapi .bg-white, .unapi .bg-gray-50, .unapi .bg-gray-100 { background-color: var(--mild-background-color) !important; }
-.unapi .text-orange-500, .unapi .text-orange-600, .unapi .text-unraid-red { color: #00ff88 !important; }
-.unapi .bg-orange-500, .unapi .bg-unraid-red { background-color: #00ff88 !important; color: #050807 !important; }
+
+/* 3.2 Class-level fallbacks (in case a build inlined token values) + legibility */
+.unapi .text-gray-400, .unapi .text-gray-500, .unapi .text-gray-600 { color: #6fa381 !important; }
+.unapi .text-gray-700, .unapi .text-gray-800, .unapi .text-gray-900, .unapi .text-black { color: #c9efd6 !important; }
+.unapi .bg-white, .unapi .bg-gray-50, .unapi .bg-gray-100 { background-color: #0e1f15 !important; }
+.unapi .bg-gray-200, .unapi .bg-grey { background-color: #163a28 !important; }
+.unapi .bg-gray-300, .unapi .bg-grey-mid { background-color: #1e4a34 !important; }
+.unapi .bg-yellow-100, .unapi .bg-yellow-200 { background-color: #2a3a0c !important; color: #d7ff7a !important; }
+.unapi .bg-green-200, .unapi .bg-green-300 { background-color: #0b3b25 !important; color: #00ff88 !important; }
+.unapi .bg-blue-100, .unapi .bg-blue-200 { background-color: #0a2a33 !important; color: #19e6b5 !important; }
+.unapi .bg-orange, .unapi .bg-orange-dark { background-color: #0d6b42 !important; color: #ffffff !important; }
+.unapi .bg-unraid-red { background-color: #e0163b !important; color: #ffffff !important; }
+.unapi .text-orange, .unapi .text-orange-500, .unapi .text-orange-600, .unapi .text-primary, .unapi .text-unraid-red { color: #00ff88 !important; }
 .unapi .text-red-500, .unapi .text-red-600 { color: #ff2a4d !important; }
-.unapi .text-green-500, .unapi .text-green-600 { color: #00ff88 !important; }
+.unapi .text-green-500, .unapi .text-green-600, .unapi .text-green-800 { color: #00ff88 !important; }
+.unapi .text-yellow-800, .unapi .text-amber-800 { color: #d7ff7a !important; }
+.unapi .border-orange { border-color: #00ff88 !important; }
+.unapi .border-gray-200, .unapi .border-gray-300 { border-color: #214f37 !important; }
+
+/* BrandButton "fill" gradient (from-unraid-red → to-orange) becomes emerald → mint */
+.unapi .from-unraid-red { --tw-gradient-from: #00a85a !important; }
+.unapi .to-orange { --tw-gradient-to: #00ff88 !important; }
+
+/* 3.3 Make every badge / pill read as a BOX: 1px emerald ring + soft glow */
+.unapi .unraid-ui-badge-test,
+.unapi button.rounded-full, .unapi a.rounded-full, .unapi span.rounded-full {
+    box-shadow: inset 0 0 0 1px rgba(0,255,136,0.45), 0 0 10px rgba(0,255,136,0.10) !important;
+}
+.unapi .bg-yellow-100.unraid-ui-badge-test, .unapi .bg-yellow-200.unraid-ui-badge-test {
+    box-shadow: inset 0 0 0 1px rgba(180,255,60,0.6), 0 0 10px rgba(180,255,60,0.12) !important;
+}
+.unapi .bg-unraid-red.unraid-ui-badge-test {
+    box-shadow: inset 0 0 0 1px rgba(255,42,77,0.7), 0 0 10px rgba(255,42,77,0.18) !important;
+}
+.unapi button:not(.rounded-full):not(.hover\:bg-transparent) {
+    box-shadow: 0 0 0 1px rgba(0,255,136,0.35) !important;
+}
+.unapi .bg-primary { box-shadow: 0 0 0 1px #00ff88, 0 0 16px rgba(0,255,136,0.35) !important; }
+
+/* 3.4 Optional: tint the orange UNRAID wordmark toward emerald (remove if you
+       prefer the stock orange logo). Targets the header SVG by its gradient id. */
+.unapi svg:has([id*="unraid-header-logo-gradient"]),
+svg:has([id*="unraid-header-logo-gradient"]) {
+    filter: hue-rotate(118deg) saturate(1.15) brightness(1.1) drop-shadow(0 0 6px rgba(0,255,136,0.35));
+}
 
 
 /* ───────────────────────── 4. REBEL CORE LOGO (watermark) ─────────────────── */

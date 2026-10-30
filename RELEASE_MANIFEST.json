@@ -1,23 +1,23 @@
 {
   "name": "rebel-core",
-  "version": "0.1.0",
-  "released": "2026-10-30T15:36:41Z",
+  "version": "0.1.1",
+  "released": "2026-10-30T16:00:28Z",
   "git_commit": "pre-release",
   "artifacts": [
     {
-      "path": "dist/emerald-void.local-v0.1.0.css",
-      "sha256": "df4b911815976e18d11dbf8cea15f8aaff3d42e14fc7ccafa70894a00a2b65ad",
-      "size_bytes": 55119
+      "path": "dist/emerald-void.local-v0.1.1.css",
+      "sha256": "a57a8a09a9ff021dcdfc6d556e50b57d3b212b1375f76032322dc7b0b5794399",
+      "size_bytes": 69802
     },
     {
-      "path": "dist/rebel-core-docs-v0.1.0.tar.gz",
-      "sha256": "fcb5efd551f3acf3c7b274d49d96de1274ae7a50b8b9cee08432da768c92f461",
-      "size_bytes": 6532
+      "path": "dist/rebel-core-docs-v0.1.1.tar.gz",
+      "sha256": "03acc819d7edb81826b8fc606ff755f4dca670fae9ac22bec361f8c7922dc75e",
+      "size_bytes": 6599
     },
     {
-      "path": "dist/rebel-core-skin-v0.1.0.tar.gz",
-      "sha256": "0391f1ed436e7376624ec2665d89653c307cd7917f824adbb75be8c3c21fc8d3",
-      "size_bytes": 103560
+      "path": "dist/rebel-core-skin-v0.1.1.tar.gz",
+      "sha256": "fd34d60358a3f5906319af63897279dba612c299d237ed37d8c178a736d848e7",
+      "size_bytes": 106209
     }
   ],
   "provenance": {

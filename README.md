@@ -12,7 +12,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-ACTIVE-39FF14?style=for-the-badge&labelColor=1a1a1a" alt="Status" />
-  <img src="https://img.shields.io/badge/Version-v0.1.0-FF6B00?style=for-the-badge&labelColor=1a1a1a" alt="Version" />
+  <img src="https://img.shields.io/badge/Version-v0.1.1-FF6B00?style=for-the-badge&labelColor=1a1a1a" alt="Version" />
   <img src="https://img.shields.io/badge/Phase-Build-FF6B00?style=for-the-badge&labelColor=1a1a1a" alt="Phase" />
   <img src="https://img.shields.io/badge/License-MIT-1a1a1a?style=for-the-badge&labelColor=000000" alt="License" />
   <img src="https://img.shields.io/badge/Tier-T1-1a1a1a?style=for-the-badge&labelColor=000000" alt="Tier" />
@@ -206,6 +206,7 @@ make local-css                # optional offline skin
 
 | Version | Date | Change |
 |:-------:|:----:|:-------|
+| v0.1.1 | 2026-10-30 | CSS revision: Unraid 7.2 Update OS / Connect / API pages (Tailwind v4 palette tokens, badges and pills), preview badge row. |
 | v0.1.0 | 2026-10-30 | Initial public baseline: Emerald Void skin, REBEL CORE logo and hosted URL, offline build, install script, preview, canonical scaffold, PII guard. |
 
 Full history: [`CHANGELOG.md`](CHANGELOG.md).

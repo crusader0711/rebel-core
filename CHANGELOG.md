@@ -4,6 +4,14 @@ All notable changes to this repository are documented here. Format: [Keep a Chan
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-10-30
+### Changed
+- Skin (`src/emerald-void.css`): revised section 3 for Unraid 7.2's Update OS / Connect / API pages (`@unraid/ui`, Tailwind v4). The Tailwind `--color-*` palette scales (gray/neutral/zinc/slate, yellow/amber/lime, green/emerald/primary, blue/sky/cyan/teal/indigo/purple, pink/red/unraid-red/unraid-green) and the brand tokens are now remapped directly; shadcn HSL and Nuxt UI semantic tokens extended; class-level fallbacks and a 1px emerald ring on badges and pills added; optional UNRAID wordmark tint (3.4). Section 1 borders lightened (`#1c3a29` → `#214f37`, input border `#2f6a47` → `#3a7d55`).
+- Preview (`examples/preview/emerald-void-preview.html`): new row of Update OS badges and pills to show the token remap.
+- Version bump to 0.1.1; `RELEASE_MANIFEST.json` and `SHA256SUMS` regenerated.
+### Unchanged
+- Section 4 (logo watermark), the hosted logo URL, the image files and the install script.
+
 ## [0.1.0] — 2026-10-30
 ### Added
 - Emerald Void skin (`src/emerald-void.css`) for Unraid 7.2+ via ThemeUI; optional install script; static palette preview.
