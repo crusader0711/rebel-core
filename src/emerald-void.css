@@ -26,9 +26,9 @@
     --background-color: #050807;
     --opac-background-color: #050807dd;
     --mild-background-color: #0a110d;
-    --usage-bar-background-color: #143021;
-    --usage-bar-used-background-color: #00ff88;
-    --usage-disk-background-color: #143021;
+    --usage-bar-background-color: #184a2f;
+    --usage-bar-used-background-color: #ff2a4d;   /* pie + disk-bar FILL: crimson (ThemeUI feeds this to the conic gradients) */
+    --usage-disk-background-color: #184a2f;
     --inverse-background-color: #c9efd6;
     --radio-background-color: #143021;
     --dashboard-background-color: #0a110d;
@@ -110,8 +110,8 @@ table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc { background-color: #07100b !important; color: #c9efd6 !important; }
 
-.usage-disk > span:first-child { background-color: #00ff88 !important; }
-.usage-disk.sys > span { background-color: #00ff88 !important; }
+.usage-disk > span:first-child { background-color: #ff2a4d !important; }
+.usage-disk.sys > span { background-color: #ff2a4d !important; }
 
 .text-header-text-primary{color:#00ff88!important}
 .text-header-text-secondary{color:rgba(0,255,136,.7)!important}
@@ -210,30 +210,228 @@ a:hover, a:focus {
     text-shadow: 0 0 8px var(--ev-glow);
 }
 
-/* 2.6 Metrics — the bright-green readouts. Mono numerals + glow on gauges. */
+/* 2.6 Metrics — gauges and bars.
+   Rule set:
+     • pies (RAM / boot / log / docker) and general usage bars (disks, shares,
+       memory, docker vdisk) FILL in crimson, so the used portion contrasts
+       against the emerald track as it grows;
+     • CPU bars stay emerald and switch to bright yellow at ≥ 80 %.
+   Pies: ThemeUI's loader normalises Unraid's conic-gradient to
+   [--usage-bar-used-background-color, --brand-orange, --brand-red, track] by
+   position, so a single fill colour is all CSS can set there.
+   CPU bars: Unraid writes the load as an inline `style="width: NN%"`, so the
+   yellow tier is matched on that attribute (80–100, with decimals).        */
 .usage-bar, .usage-disk {
     background-color: var(--usage-bar-background-color) !important;
-    box-shadow: inset 0 0 0 1px rgba(0,255,136,0.12) !important;
+    box-shadow: inset 0 0 0 1px rgba(0,255,136,0.18) !important;
     font-family: var(--ev-mono);
     font-variant-numeric: tabular-nums;
 }
+/* default fill — crimson */
 .usage-bar > span, .usage-disk > span {
+    background-color: #ff2a4d !important;
+    background-image: linear-gradient(90deg, #d41238 0%, #ff2a4d 100%) !important;
+    box-shadow: 0 0 10px var(--ev-red-glow), 0 0 2px #ff2a4d !important;
+    color: #ffffff !important;
+    font-weight: 700;
+}
+/* CPU bars — emerald baseline */
+.usage-bar > span[id^="cpu"], .usage-bar > span#load {
+    background-color: #00ff88 !important;
     background-image: linear-gradient(90deg, #00c86b 0%, #00ff88 100%) !important;
     box-shadow: 0 0 10px var(--ev-glow), 0 0 2px #00ff88 !important;
     color: #031a0f !important;
-    font-weight: 700;
+    transition: background-image .2s ease, box-shadow .2s ease;
 }
-/* Threshold tiers (Unraid marks over-utilised bars / text with these classes).
-   Warning → lime, Critical → crimson. Harmless if a class isn't present. */
-.usage-bar > span.warning, .usage-bar > span.orange, .usage-disk > span.orange {
-    background-image: linear-gradient(90deg, #8ccc1f 0%, #b4ff3c 100%) !important;
-    box-shadow: 0 0 10px rgba(180,255,60,0.45) !important;
+/* CPU bars — ≥ 80 % → bright yellow */
+.usage-bar > span[id^="cpu"][style*="width: 80%"],
+.usage-bar > span#load[style*="width: 80%"],
+.usage-bar > span[id^="cpu"][style*="width: 80."],
+.usage-bar > span#load[style*="width: 80."],
+.usage-bar > span[id^="cpu"][style*="width:80%"],
+.usage-bar > span#load[style*="width:80%"],
+.usage-bar > span[id^="cpu"][style*="width:80."],
+.usage-bar > span#load[style*="width:80."],
+.usage-bar > span[id^="cpu"][style*="width: 81%"],
+.usage-bar > span#load[style*="width: 81%"],
+.usage-bar > span[id^="cpu"][style*="width: 81."],
+.usage-bar > span#load[style*="width: 81."],
+.usage-bar > span[id^="cpu"][style*="width:81%"],
+.usage-bar > span#load[style*="width:81%"],
+.usage-bar > span[id^="cpu"][style*="width:81."],
+.usage-bar > span#load[style*="width:81."],
+.usage-bar > span[id^="cpu"][style*="width: 82%"],
+.usage-bar > span#load[style*="width: 82%"],
+.usage-bar > span[id^="cpu"][style*="width: 82."],
+.usage-bar > span#load[style*="width: 82."],
+.usage-bar > span[id^="cpu"][style*="width:82%"],
+.usage-bar > span#load[style*="width:82%"],
+.usage-bar > span[id^="cpu"][style*="width:82."],
+.usage-bar > span#load[style*="width:82."],
+.usage-bar > span[id^="cpu"][style*="width: 83%"],
+.usage-bar > span#load[style*="width: 83%"],
+.usage-bar > span[id^="cpu"][style*="width: 83."],
+.usage-bar > span#load[style*="width: 83."],
+.usage-bar > span[id^="cpu"][style*="width:83%"],
+.usage-bar > span#load[style*="width:83%"],
+.usage-bar > span[id^="cpu"][style*="width:83."],
+.usage-bar > span#load[style*="width:83."],
+.usage-bar > span[id^="cpu"][style*="width: 84%"],
+.usage-bar > span#load[style*="width: 84%"],
+.usage-bar > span[id^="cpu"][style*="width: 84."],
+.usage-bar > span#load[style*="width: 84."],
+.usage-bar > span[id^="cpu"][style*="width:84%"],
+.usage-bar > span#load[style*="width:84%"],
+.usage-bar > span[id^="cpu"][style*="width:84."],
+.usage-bar > span#load[style*="width:84."],
+.usage-bar > span[id^="cpu"][style*="width: 85%"],
+.usage-bar > span#load[style*="width: 85%"],
+.usage-bar > span[id^="cpu"][style*="width: 85."],
+.usage-bar > span#load[style*="width: 85."],
+.usage-bar > span[id^="cpu"][style*="width:85%"],
+.usage-bar > span#load[style*="width:85%"],
+.usage-bar > span[id^="cpu"][style*="width:85."],
+.usage-bar > span#load[style*="width:85."],
+.usage-bar > span[id^="cpu"][style*="width: 86%"],
+.usage-bar > span#load[style*="width: 86%"],
+.usage-bar > span[id^="cpu"][style*="width: 86."],
+.usage-bar > span#load[style*="width: 86."],
+.usage-bar > span[id^="cpu"][style*="width:86%"],
+.usage-bar > span#load[style*="width:86%"],
+.usage-bar > span[id^="cpu"][style*="width:86."],
+.usage-bar > span#load[style*="width:86."],
+.usage-bar > span[id^="cpu"][style*="width: 87%"],
+.usage-bar > span#load[style*="width: 87%"],
+.usage-bar > span[id^="cpu"][style*="width: 87."],
+.usage-bar > span#load[style*="width: 87."],
+.usage-bar > span[id^="cpu"][style*="width:87%"],
+.usage-bar > span#load[style*="width:87%"],
+.usage-bar > span[id^="cpu"][style*="width:87."],
+.usage-bar > span#load[style*="width:87."],
+.usage-bar > span[id^="cpu"][style*="width: 88%"],
+.usage-bar > span#load[style*="width: 88%"],
+.usage-bar > span[id^="cpu"][style*="width: 88."],
+.usage-bar > span#load[style*="width: 88."],
+.usage-bar > span[id^="cpu"][style*="width:88%"],
+.usage-bar > span#load[style*="width:88%"],
+.usage-bar > span[id^="cpu"][style*="width:88."],
+.usage-bar > span#load[style*="width:88."],
+.usage-bar > span[id^="cpu"][style*="width: 89%"],
+.usage-bar > span#load[style*="width: 89%"],
+.usage-bar > span[id^="cpu"][style*="width: 89."],
+.usage-bar > span#load[style*="width: 89."],
+.usage-bar > span[id^="cpu"][style*="width:89%"],
+.usage-bar > span#load[style*="width:89%"],
+.usage-bar > span[id^="cpu"][style*="width:89."],
+.usage-bar > span#load[style*="width:89."],
+.usage-bar > span[id^="cpu"][style*="width: 90%"],
+.usage-bar > span#load[style*="width: 90%"],
+.usage-bar > span[id^="cpu"][style*="width: 90."],
+.usage-bar > span#load[style*="width: 90."],
+.usage-bar > span[id^="cpu"][style*="width:90%"],
+.usage-bar > span#load[style*="width:90%"],
+.usage-bar > span[id^="cpu"][style*="width:90."],
+.usage-bar > span#load[style*="width:90."],
+.usage-bar > span[id^="cpu"][style*="width: 91%"],
+.usage-bar > span#load[style*="width: 91%"],
+.usage-bar > span[id^="cpu"][style*="width: 91."],
+.usage-bar > span#load[style*="width: 91."],
+.usage-bar > span[id^="cpu"][style*="width:91%"],
+.usage-bar > span#load[style*="width:91%"],
+.usage-bar > span[id^="cpu"][style*="width:91."],
+.usage-bar > span#load[style*="width:91."],
+.usage-bar > span[id^="cpu"][style*="width: 92%"],
+.usage-bar > span#load[style*="width: 92%"],
+.usage-bar > span[id^="cpu"][style*="width: 92."],
+.usage-bar > span#load[style*="width: 92."],
+.usage-bar > span[id^="cpu"][style*="width:92%"],
+.usage-bar > span#load[style*="width:92%"],
+.usage-bar > span[id^="cpu"][style*="width:92."],
+.usage-bar > span#load[style*="width:92."],
+.usage-bar > span[id^="cpu"][style*="width: 93%"],
+.usage-bar > span#load[style*="width: 93%"],
+.usage-bar > span[id^="cpu"][style*="width: 93."],
+.usage-bar > span#load[style*="width: 93."],
+.usage-bar > span[id^="cpu"][style*="width:93%"],
+.usage-bar > span#load[style*="width:93%"],
+.usage-bar > span[id^="cpu"][style*="width:93."],
+.usage-bar > span#load[style*="width:93."],
+.usage-bar > span[id^="cpu"][style*="width: 94%"],
+.usage-bar > span#load[style*="width: 94%"],
+.usage-bar > span[id^="cpu"][style*="width: 94."],
+.usage-bar > span#load[style*="width: 94."],
+.usage-bar > span[id^="cpu"][style*="width:94%"],
+.usage-bar > span#load[style*="width:94%"],
+.usage-bar > span[id^="cpu"][style*="width:94."],
+.usage-bar > span#load[style*="width:94."],
+.usage-bar > span[id^="cpu"][style*="width: 95%"],
+.usage-bar > span#load[style*="width: 95%"],
+.usage-bar > span[id^="cpu"][style*="width: 95."],
+.usage-bar > span#load[style*="width: 95."],
+.usage-bar > span[id^="cpu"][style*="width:95%"],
+.usage-bar > span#load[style*="width:95%"],
+.usage-bar > span[id^="cpu"][style*="width:95."],
+.usage-bar > span#load[style*="width:95."],
+.usage-bar > span[id^="cpu"][style*="width: 96%"],
+.usage-bar > span#load[style*="width: 96%"],
+.usage-bar > span[id^="cpu"][style*="width: 96."],
+.usage-bar > span#load[style*="width: 96."],
+.usage-bar > span[id^="cpu"][style*="width:96%"],
+.usage-bar > span#load[style*="width:96%"],
+.usage-bar > span[id^="cpu"][style*="width:96."],
+.usage-bar > span#load[style*="width:96."],
+.usage-bar > span[id^="cpu"][style*="width: 97%"],
+.usage-bar > span#load[style*="width: 97%"],
+.usage-bar > span[id^="cpu"][style*="width: 97."],
+.usage-bar > span#load[style*="width: 97."],
+.usage-bar > span[id^="cpu"][style*="width:97%"],
+.usage-bar > span#load[style*="width:97%"],
+.usage-bar > span[id^="cpu"][style*="width:97."],
+.usage-bar > span#load[style*="width:97."],
+.usage-bar > span[id^="cpu"][style*="width: 98%"],
+.usage-bar > span#load[style*="width: 98%"],
+.usage-bar > span[id^="cpu"][style*="width: 98."],
+.usage-bar > span#load[style*="width: 98."],
+.usage-bar > span[id^="cpu"][style*="width:98%"],
+.usage-bar > span#load[style*="width:98%"],
+.usage-bar > span[id^="cpu"][style*="width:98."],
+.usage-bar > span#load[style*="width:98."],
+.usage-bar > span[id^="cpu"][style*="width: 99%"],
+.usage-bar > span#load[style*="width: 99%"],
+.usage-bar > span[id^="cpu"][style*="width: 99."],
+.usage-bar > span#load[style*="width: 99."],
+.usage-bar > span[id^="cpu"][style*="width:99%"],
+.usage-bar > span#load[style*="width:99%"],
+.usage-bar > span[id^="cpu"][style*="width:99."],
+.usage-bar > span#load[style*="width:99."],
+.usage-bar > span[id^="cpu"][style*="width: 100%"],
+.usage-bar > span#load[style*="width: 100%"],
+.usage-bar > span[id^="cpu"][style*="width:100%"],
+.usage-bar > span#load[style*="width:100%"] {
+    background-color: #ffe600 !important;
+    background-image: linear-gradient(90deg, #ffc400 0%, #ffe600 100%) !important;
+    box-shadow: 0 0 12px rgba(255,230,0,0.55), 0 0 2px #ffe600 !important;
+    color: #1a1500 !important;
 }
-.usage-bar > span.alert, .usage-bar > span.red, .usage-bar > span.critical, .usage-disk > span.red {
-    background-image: linear-gradient(90deg, #c4123a 0%, #ff2a4d 100%) !important;
+/* If Unraid also tags bars with tier classes, honour them (class wins over position) */
+.usage-bar > span.warning, .usage-bar > span.orange, .usage-disk > span.orange,
+.usage-bar > span[id^="cpu"].warning, .usage-bar > span[id^="cpu"].orange {
+    background-image: linear-gradient(90deg, #ffc400 0%, #ffe600 100%) !important;
+    box-shadow: 0 0 12px rgba(255,230,0,0.55) !important;
+    color: #1a1500 !important;
+}
+.usage-bar > span.alert, .usage-bar > span.red, .usage-bar > span.critical, .usage-disk > span.red,
+.usage-bar > span[id^="cpu"].alert, .usage-bar > span[id^="cpu"].red, .usage-bar > span[id^="cpu"].critical {
+    background-image: linear-gradient(90deg, #d41238 0%, #ff2a4d 100%) !important;
     box-shadow: 0 0 10px var(--ev-red-glow) !important;
-    color: #fff !important;
+    color: #ffffff !important;
 }
+/* Memory legend dots: ThemeUI maps dot1→fill var, dot2→brand-orange, dot3→brand-red.
+   With a crimson fill, dot3 ("Free") would collide — give it the track colour. */
+span[id='dynamic'] i.fa-circle:nth-of-type(1) { color: #ff2a4d !important; }
+span[id='dynamic'] i.fa-circle:nth-of-type(2) { color: #b4ff3c !important; }
+span[id='dynamic'] i.fa-circle:nth-of-type(3) { color: #2f6a47 !important; }
+span[id='dynamic'] i.fa-circle:nth-of-type(4) { color: var(--alt-text-color) !important; }
 
 /* Dashboard pie/gauge centres and stat text */
 div.pie, div.pie::before, div.pie::after { background-color: var(--dashboard-background-color) !important; }

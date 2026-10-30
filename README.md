@@ -12,7 +12,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-ACTIVE-39FF14?style=for-the-badge&labelColor=1a1a1a" alt="Status" />
-  <img src="https://img.shields.io/badge/Version-v0.1.1-FF6B00?style=for-the-badge&labelColor=1a1a1a" alt="Version" />
+  <img src="https://img.shields.io/badge/Version-v0.2.0-FF6B00?style=for-the-badge&labelColor=1a1a1a" alt="Version" />
   <img src="https://img.shields.io/badge/Phase-Build-FF6B00?style=for-the-badge&labelColor=1a1a1a" alt="Phase" />
   <img src="https://img.shields.io/badge/License-MIT-1a1a1a?style=for-the-badge&labelColor=000000" alt="License" />
   <img src="https://img.shields.io/badge/Tier-T1-1a1a1a?style=for-the-badge&labelColor=000000" alt="Tier" />
@@ -142,6 +142,8 @@ Paste `dist/emerald-void.local.css` instead of `src/emerald-void.css` in step 1.
 
 To change or remove the logo, edit or delete section 4 at the bottom of the CSS.
 
+**Tuning the gauges.** Block 2.6 of `src/emerald-void.css` sets the gauge colours. Pies and general usage bars fill crimson against the emerald track. CPU bars (`span[id^=cpu]`, `span#load`) stay emerald and turn yellow at 80% or more. The CPU tier is matched on Unraid's inline `style="width: NN%"` (80–100, decimals included), because ThemeUI's loader normalises pie gradients by position, so threshold colours only work on bars. To change the yellow, edit its hex in that block; if Unraid tags a bar with `.warning`/`.alert` classes, those are honoured too.
+
 ---
 
 ## Milestones & Roadmap
@@ -206,6 +208,7 @@ make local-css                # optional offline skin
 
 | Version | Date | Change |
 |:-------:|:----:|:-------|
+| v0.2.0 | 2026-10-30 | Gauge colours: pies and disk/share/memory bars fill crimson on an emerald track; CPU bars stay emerald and turn yellow at 80% or more; brighter track and ring; preview CPU section. |
 | v0.1.1 | 2026-10-30 | CSS revision: Unraid 7.2 Update OS / Connect / API pages (Tailwind v4 palette tokens, badges and pills), preview badge row. |
 | v0.1.0 | 2026-10-30 | Initial public baseline: Emerald Void skin, REBEL CORE logo and hosted URL, offline build, install script, preview, canonical scaffold, PII guard. |
 

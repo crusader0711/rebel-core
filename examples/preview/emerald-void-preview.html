@@ -16,7 +16,7 @@ table.dashboard td{padding:9px 14px;border-bottom:1px solid var(--border-color)}
 .usage-bar{position:relative;height:18px;width:100%;display:block;border-radius:8px;overflow:hidden}
 .usage-bar>span{position:absolute;left:0;top:0;bottom:0;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:11px;border-radius:7px}
 .pie-row{display:flex;gap:26px;align-items:center}
-.gauge{width:92px;height:92px;border-radius:50%;background:conic-gradient(#00ff88 0 62%,#b4ff3c 62% 71%,#ff2a4d 71% 76%,#143021 76% 100%);display:grid;place-items:center;box-shadow:0 0 18px var(--ev-glow-soft)}
+.gauge{width:92px;height:92px;border-radius:50%;background:conic-gradient(#ff2a4d 0 62%,#b4ff3c 62% 71%,#184a2f 71% 100%);display:grid;place-items:center;box-shadow:0 0 18px var(--ev-glow-soft)}
 .gauge i{width:66px;height:66px;border-radius:50%;background:var(--dashboard-background-color);display:grid;place-items:center;font:700 15px var(--ev-mono);color:#00ff88;text-shadow:0 0 8px var(--ev-glow);font-style:normal}
 .legend span{display:block;font-size:12px;margin:3px 0}
 .legend b{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
@@ -47,7 +47,7 @@ input[type=text]{padding:8px 10px;border:1px solid;border-radius:6px;width:260px
  <div><div class="title"><span>System</span><span class="green-text">● Array Started</span></div>
   <table class="dashboard"><tr><td class="pie-row">
    <div class="gauge"><i>62%</i></div>
-   <div class="legend"><span><b style="background:#00ff88"></b>RAM 19.8 GiB</span><span><b style="background:#b4ff3c"></b>Flash 2.1 GiB</span><span><b style="background:#ff2a4d"></b>Log 128 MiB</span><span><b style="background:#6fa381"></b>Docker 7.4 GiB</span></div>
+   <div class="legend"><span><b style="background:#ff2a4d"></b>System 19.8 GiB</span><span><b style="background:#b4ff3c"></b>Docker 2.1 GiB</span><span><b style="background:#2f6a47"></b>Free 10.1 GiB</span><span><b style="background:#6fa381"></b>Docker 7.4 GiB</span></div>
    <div><div class="stat"><small>CPU load</small>14 %</div><div class="stat" style="margin-top:10px"><small>Uptime</small>31d 04:12</div></div>
   </td></tr>
   <tr><td><div class="chart"><svg viewBox="0 0 400 90" preserveAspectRatio="none"><polyline fill="none" stroke="#b4ff3c" stroke-width="1.5" points="0,70 30,66 60,72 90,50 120,58 150,30 180,44 210,40 240,22 270,38 300,46 330,28 360,36 400,30"/><polyline fill="none" stroke="#ff2a4d" stroke-width="1.5" points="0,82 40,80 80,84 120,78 160,81 200,70 240,79 280,76 320,83 360,74 400,80"/></svg></div></td></tr>
@@ -56,8 +56,8 @@ input[type=text]{padding:8px 10px;border:1px solid;border-radius:6px;width:260px
   <table class="dashboard">
    <tr><td>disk1 <span class="green-text">●</span></td><td style="width:55%"><span class="usage-bar"><span style="width:41%">41%</span></span></td></tr>
    <tr><td>disk2 <span class="green-text">●</span></td><td><span class="usage-bar"><span style="width:67%">67%</span></span></td></tr>
-   <tr><td>disk3 <span class="orange-text">●</span></td><td><span class="usage-bar"><span class="warning" style="width:84%">84%</span></span></td></tr>
-   <tr><td>cache <span class="red-text">●</span></td><td><span class="usage-bar"><span class="alert" style="width:96%">96%</span></span></td></tr>
+   <tr><td>disk3 <span class="orange-text">●</span></td><td><span class="usage-bar"><span style="width:84%">84%</span></span></td></tr>
+   <tr><td>cache <span class="red-text">●</span></td><td><span class="usage-bar"><span style="width:96%">96%</span></span></td></tr>
    <tr><td>parity <span class="blue-text">●</span></td><td><span class="alt-text" style="color:var(--alt-text-color);font-family:var(--ev-mono);font-size:12px">last check 2026-10-26 · 0 errors</span></td></tr>
   </table></div>
  <div><div class="title"><span>Docker Containers</span></div>
@@ -72,6 +72,16 @@ input[type=text]{padding:8px 10px;border:1px solid;border-radius:6px;width:260px
    <input type="text" placeholder="/mnt/user/appdata/…"> <div class="btnrow"><input type="button" value="Apply"><input type="button" value="Start Array"><input type="button" value="Check Updates"><input type="button" class="red" value="Delete"></div>
    <p style="color:var(--alt-text-color);font-size:12px;margin-top:14px">Links render as <a href="#">emerald</a>; hover goes lime. Red is reserved for critical thresholds, stopped/error states, and destructive actions.</p>
   </div></div>
+
+ <div style="grid-column:1/-1"><div class="title"><span>Processor · CPU bars (emerald, yellow ≥ 80 %)</span></div>
+  <table class="dashboard" style="width:100%">
+   <tr><td style="width:160px">Overall Load</td><td style="width:60px;text-align:right;font-family:var(--ev-mono);color:var(--alt-text-color)">34%</td><td><span class="usage-bar"><span id="load" style="width: 34%;"></span></span></td></tr>
+   <tr><td>CPU 0 – HT 6</td><td style="text-align:right;font-family:var(--ev-mono);color:var(--alt-text-color)">12%</td><td><span class="usage-bar"><span id="cpu0" style="width: 12%;"></span></span></td></tr>
+   <tr><td>CPU 1 – HT 7</td><td style="text-align:right;font-family:var(--ev-mono);color:var(--alt-text-color)">79%</td><td><span class="usage-bar"><span id="cpu1" style="width: 79%;"></span></span></td></tr>
+   <tr><td>CPU 2 – HT 8</td><td style="text-align:right;font-family:var(--ev-mono);color:var(--alt-text-color)">80%</td><td><span class="usage-bar"><span id="cpu2" style="width: 80%;"></span></span></td></tr>
+   <tr><td>CPU 3 – HT 9</td><td style="text-align:right;font-family:var(--ev-mono);color:var(--alt-text-color)">93%</td><td><span class="usage-bar"><span id="cpu3" style="width:93%"></span></span></td></tr>
+   <tr><td>CPU 4 – HT 10</td><td style="text-align:right;font-family:var(--ev-mono);color:var(--alt-text-color)">100%</td><td><span class="usage-bar"><span id="cpu4" style="width: 100%;"></span></span></td></tr>
+  </table></div>
 
  <div style="grid-column:1/-1"><div class="title"><span>Update OS · @unraid/ui badges &amp; pills (token-remapped)</span></div>
   <div class="unapi">
