@@ -1,0 +1,15 @@
+# --- secrets / env (never commit) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+# --- build / release ---
+dist/
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

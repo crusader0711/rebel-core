@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use or reference this project, please cite it as below."
+title: "rebel-core"
+type: software
+authors:
+  - name: "rebel-core contributors"
+license: MIT
+version: 0.1.0
+abstract: "Emerald Void, a dark Unraid 7.2+ WebUI skin for ThemeUI, with the REBEL CORE logo, a hosted logo URL and an offline build."

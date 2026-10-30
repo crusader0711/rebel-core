@@ -1,0 +1,7 @@
+/* Reusable logo watermark: add to any ThemeUI custom CSS. Replace the URL (hosted) or a data: URI (offline). */
+:root { --rc-logo: url("https://example.com/path/to/logo.png"); }
+body::before {
+    content: ""; position: fixed; right: 20px; bottom: 44px; width: 220px; height: 26px;
+    background: var(--rc-logo) center / contain no-repeat; opacity: .55; pointer-events: none; z-index: 1;
+}
+@media print { body::before { display: none; } }
