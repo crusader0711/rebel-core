@@ -191,6 +191,8 @@ make local-css                # optional offline skin
 # open examples/preview/emerald-void-preview.html in a browser for a static mock
 ```
 
+Ideas for consideration live in [docs/BACKLOG.md](docs/BACKLOG.md) (intake template: [.github/ISSUE_TEMPLATE/idea.yml](.github/ISSUE_TEMPLATE/idea.yml)).
+
 ---
 
 ## Tech Stack
